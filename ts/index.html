@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>kolavatar — TS playground</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>kolavatar <span class="muted">TS playground</span></h1>
+      <div class="muted">
+        Storybook-style preview of the TS renderer. Each story is a hand-crafted
+        descriptor; the Go-reference stories show the server-side output beside
+        ours for visual cross-check.
+      </div>
+    </header>
+    <main>
+      <aside id="sidebar"></aside>
+      <section id="canvas">
+        <div id="story-header">
+          <h2 id="story-title"></h2>
+          <p id="story-blurb" class="muted"></p>
+        </div>
+        <div id="preview-row">
+          <figure id="ts-preview">
+            <figcaption>TS renderer (this package)</figcaption>
+            <div id="ts-svg" class="preview-frame"></div>
+          </figure>
+          <figure id="go-preview" hidden>
+            <figcaption>Go reference (kolavatar-server-go)</figcaption>
+            <div id="go-svg" class="preview-frame"></div>
+          </figure>
+        </div>
+        <details id="descriptor-panel">
+          <summary>Descriptor JSON</summary>
+          <textarea id="descriptor-json" spellcheck="false"></textarea>
+          <div class="json-actions">
+            <button id="json-apply" type="button">Apply edits</button>
+            <button id="json-reset" type="button" class="ghost">Reset</button>
+            <span id="json-status" class="status"></span>
+          </div>
+        </details>
+      </section>
+      <aside id="controls">
+        <h3>Render options</h3>
+
+        <label>
+          Size (px)
+          <input id="ctl-size" type="number" min="48" max="512" step="8" value="256" />
+        </label>
+
+        <label>
+          Stroke width
+          <input id="ctl-stroke" type="number" min="1" max="12" step="1" value="4" />
+        </label>
+
+        <label>
+          Animation
+          <select id="ctl-anim">
+            <option value="none">none</option>
+            <option value="draw" selected>draw</option>
+            <option value="idle">idle</option>
+            <option value="morph">morph</option>
+          </select>
+        </label>
+
+        <label>
+          reduceMotion
+          <select id="ctl-reduce">
+            <option value="auto" selected>auto (honour @media)</option>
+            <option value="false">false (force animations)</option>
+            <option value="true">true (no animations)</option>
+          </select>
+        </label>
+
+        <label>
+          Draw duration (ms)
+          <input id="ctl-draw-ms" type="number" min="200" max="6000" step="100" value="1600" />
+        </label>
+
+        <label>
+          ariaLabel
+          <input id="ctl-aria" type="text" placeholder="(default: 'Kolavatar {seed}')" />
+        </label>
+
+        <h3>Palette override</h3>
+        <label>
+          Stroke (fg)
+          <input id="ctl-fg" type="color" />
+          <button class="ghost small" id="ctl-fg-clear" type="button">×</button>
+        </label>
+        <label>
+          Background (bg)
+          <input id="ctl-bg" type="color" />
+          <button class="ghost small" id="ctl-bg-clear" type="button">×</button>
+        </label>
+        <label>
+          Dot color
+          <input id="ctl-dot" type="color" />
+          <button class="ghost small" id="ctl-dot-clear" type="button">×</button>
+        </label>
+
+        <h3>Replay</h3>
+        <button id="ctl-replay" type="button">Replay animation</button>
+        <p class="muted small">
+          Re-renders the SVG so CSS keyframes restart. Useful for the
+          <code>draw</code> mode which only plays once.
+        </p>
+
+        <h3>Cultural attribution</h3>
+        <p class="muted small" id="attribution-blurb"></p>
+      </aside>
+    </main>
+  </body>
+  <script type="module" src="./main.ts"></script>
+</html>

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>kolavatar samples — symmetric loop walks</title>
+<style>
+body { font-family: system-ui, sans-serif; margin: 24px; background: #f5f5f5; max-width: 1700px; }
+h1 { margin-bottom: 4px; }
+h2 { margin-top: 32px; border-bottom: 2px solid #ddd; padding-bottom: 4px; }
+h3 { margin-top: 20px; color: #444; }
+.subtitle { color: #666; margin-top: 0; }
+.row { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+figure { background: white; padding: 8px; border-radius: 8px; margin: 0; }
+figcaption { font-size: 11px; color: #555; margin-top: 6px; text-align: center; }
+img { display: block; width: 170px; height: 170px; }
+code { font-size: 12px; background: #eee; padding: 1px 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<h1>kolavatar — score = complexity dial, seed = identity</h1>
+<p class="subtitle">Seed (hash) drives identity: symmetry group and palette stay constant for a given seed. Score now drives complexity through three coupled dimensions — coverage (continuous 0→0.95), strand length (4 levels: compact / balanced / long / helix), and motif pool size (1→7 shapes from circle alone up to the full vocabulary). Same seed across the row → same family, increasing complexity. <code>WithCoverage</code> and <code>WithStrandLength</code> remain available as explicit overrides for fine control.</p>
+<p class="subtitle"><b>📊 Browse the 100-seed gallery:</b> <a href="gallery/index.html">native palettes →</a> &nbsp;|&nbsp; <a href="gallery-bw/index.html">B/W test palette →</a> &nbsp;(100 seeds × 4 scores × 2 coverage modes = 800 SVGs each)</p>
+<p class="subtitle"><b>🎛 Interactive playground:</b> run <code>go run -tags=kolavatardev ./cmd/kolavatar-playground</code> and open <code>http://localhost:8080/</code>. Live controls for seed, score, grid, symmetry, coverage, strand length, palette; SVG re-renders on every change.</p>
+
+<h2>Sheet A — score progression (same seed, complexity dial sweep)</h2>
+<p class="subtitle">Five seeds × eight scores (0.0 → 1.0). Each row shows the same identity (group + palette) at increasing complexity. 11×11 grid.</p>
+<div class="row">
+  <figure><img src="score-asha_example_com-0.0.svg"><figcaption>asha · 0.0</figcaption></figure>
+  <figure><img src="score-asha_example_com-0.15.svg"><figcaption>asha · 0.15</figcaption></figure>
+  <figure><img src="score-asha_example_com-0.3.svg"><figcaption>asha · 0.3</figcaption></figure>
+  <figure><img src="score-asha_example_com-0.45.svg"><figcaption>asha · 0.45</figcaption></figure>
+  <figure><img src="score-asha_example_com-0.6.svg"><figcaption>asha · 0.6</figcaption></figure>
+  <figure><img src="score-asha_example_com-0.75.svg"><figcaption>asha · 0.75</figcaption></figure>
+  <figure><img src="score-asha_example_com-0.9.svg"><figcaption>asha · 0.9</figcaption></figure>
+  <figure><img src="score-asha_example_com-1.0.svg"><figcaption>asha · 1.0</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="score-ravi_example_com-0.0.svg"><figcaption>ravi · 0.0</figcaption></figure>
+  <figure><img src="score-ravi_example_com-0.15.svg"><figcaption>ravi · 0.15</figcaption></figure>
+  <figure><img src="score-ravi_example_com-0.3.svg"><figcaption>ravi · 0.3</figcaption></figure>
+  <figure><img src="score-ravi_example_com-0.45.svg"><figcaption>ravi · 0.45</figcaption></figure>
+  <figure><img src="score-ravi_example_com-0.6.svg"><figcaption>ravi · 0.6</figcaption></figure>
+  <figure><img src="score-ravi_example_com-0.75.svg"><figcaption>ravi · 0.75</figcaption></figure>
+  <figure><img src="score-ravi_example_com-0.9.svg"><figcaption>ravi · 0.9</figcaption></figure>
+  <figure><img src="score-ravi_example_com-1.0.svg"><figcaption>ravi · 1.0</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="score-priya_example_com-0.0.svg"><figcaption>priya · 0.0</figcaption></figure>
+  <figure><img src="score-priya_example_com-0.15.svg"><figcaption>priya · 0.15</figcaption></figure>
+  <figure><img src="score-priya_example_com-0.3.svg"><figcaption>priya · 0.3</figcaption></figure>
+  <figure><img src="score-priya_example_com-0.45.svg"><figcaption>priya · 0.45</figcaption></figure>
+  <figure><img src="score-priya_example_com-0.6.svg"><figcaption>priya · 0.6</figcaption></figure>
+  <figure><img src="score-priya_example_com-0.75.svg"><figcaption>priya · 0.75</figcaption></figure>
+  <figure><img src="score-priya_example_com-0.9.svg"><figcaption>priya · 0.9</figcaption></figure>
+  <figure><img src="score-priya_example_com-1.0.svg"><figcaption>priya · 1.0</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="score-b-0.0.svg"><figcaption>b · 0.0</figcaption></figure>
+  <figure><img src="score-b-0.15.svg"><figcaption>b · 0.15</figcaption></figure>
+  <figure><img src="score-b-0.3.svg"><figcaption>b · 0.3</figcaption></figure>
+  <figure><img src="score-b-0.45.svg"><figcaption>b · 0.45</figcaption></figure>
+  <figure><img src="score-b-0.6.svg"><figcaption>b · 0.6</figcaption></figure>
+  <figure><img src="score-b-0.75.svg"><figcaption>b · 0.75</figcaption></figure>
+  <figure><img src="score-b-0.9.svg"><figcaption>b · 0.9</figcaption></figure>
+  <figure><img src="score-b-1.0.svg"><figcaption>b · 1.0</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="score-c-0.0.svg"><figcaption>c · 0.0</figcaption></figure>
+  <figure><img src="score-c-0.15.svg"><figcaption>c · 0.15</figcaption></figure>
+  <figure><img src="score-c-0.3.svg"><figcaption>c · 0.3</figcaption></figure>
+  <figure><img src="score-c-0.45.svg"><figcaption>c · 0.45</figcaption></figure>
+  <figure><img src="score-c-0.6.svg"><figcaption>c · 0.6</figcaption></figure>
+  <figure><img src="score-c-0.75.svg"><figcaption>c · 0.75</figcaption></figure>
+  <figure><img src="score-c-0.9.svg"><figcaption>c · 0.9</figcaption></figure>
+  <figure><img src="score-c-1.0.svg"><figcaption>c · 1.0</figcaption></figure>
+</div>
+
+<h2>Sheet B — symmetry comparison</h2>
+<p class="subtitle">Same seed (<code>asha@example.com</code>), all 8 groups now via loop-walk generation. Strand counts in caption (a 4-fold symmetric kolam typically shows 4 mirrored strands by topology).</p>
+<div class="row">
+  <figure><img src="sym-1.svg"><figcaption>1 (identity)</figcaption></figure>
+  <figure><img src="sym-m.svg"><figcaption>m (h-mirror)</figcaption></figure>
+  <figure><img src="sym-m_d.svg"><figcaption>m_d (v-mirror)</figcaption></figure>
+  <figure><img src="sym-2.svg"><figcaption>2 (180°)</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="sym-2mm.svg"><figcaption>2mm</figcaption></figure>
+  <figure><img src="sym-2m_dm_d.svg"><figcaption>2m_dm_d</figcaption></figure>
+  <figure><img src="sym-4.svg"><figcaption>4 (rot90)</figcaption></figure>
+  <figure><img src="sym-4mm_d.svg"><figcaption>4mm_d (D4)</figcaption></figure>
+</div>
+
+<h2>Sheet C — grids × symmetries</h2>
+<p class="subtitle">Same seed (<code>asha@example.com</code>). Rows: grids 5/7/9/11/13. Columns: forced symmetry <code>1</code> / <code>m</code> / <code>2mm</code> / <code>4mm_d</code>. Useful for spotting scaling behaviour and per-group character.</p>
+<div class="row">
+  <figure><img src="grid-5-1.svg"><figcaption>5×5 · 1</figcaption></figure>
+  <figure><img src="grid-5-m.svg"><figcaption>5×5 · m</figcaption></figure>
+  <figure><img src="grid-5-2mm.svg"><figcaption>5×5 · 2mm</figcaption></figure>
+  <figure><img src="grid-5-4mm_d.svg"><figcaption>5×5 · 4mm_d</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="grid-7-1.svg"><figcaption>7×7 · 1</figcaption></figure>
+  <figure><img src="grid-7-m.svg"><figcaption>7×7 · m</figcaption></figure>
+  <figure><img src="grid-7-2mm.svg"><figcaption>7×7 · 2mm</figcaption></figure>
+  <figure><img src="grid-7-4mm_d.svg"><figcaption>7×7 · 4mm_d</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="grid-9-1.svg"><figcaption>9×9 · 1</figcaption></figure>
+  <figure><img src="grid-9-m.svg"><figcaption>9×9 · m</figcaption></figure>
+  <figure><img src="grid-9-2mm.svg"><figcaption>9×9 · 2mm</figcaption></figure>
+  <figure><img src="grid-9-4mm_d.svg"><figcaption>9×9 · 4mm_d</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="grid-11-1.svg"><figcaption>11×11 · 1</figcaption></figure>
+  <figure><img src="grid-11-m.svg"><figcaption>11×11 · m</figcaption></figure>
+  <figure><img src="grid-11-2mm.svg"><figcaption>11×11 · 2mm</figcaption></figure>
+  <figure><img src="grid-11-4mm_d.svg"><figcaption>11×11 · 4mm_d</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="grid-13-1.svg"><figcaption>13×13 · 1</figcaption></figure>
+  <figure><img src="grid-13-m.svg"><figcaption>13×13 · m</figcaption></figure>
+  <figure><img src="grid-13-2mm.svg"><figcaption>13×13 · 2mm</figcaption></figure>
+  <figure><img src="grid-13-4mm_d.svg"><figcaption>13×13 · 4mm_d</figcaption></figure>
+</div>
+
+<h2>Sheet D — coverage × strand-length controls</h2>
+<p class="subtitle">Same seed (<code>asha@example.com</code>), grids 7 and 11, four symmetries × four strand styles. Columns are: <strong>compact</strong> (sl=0, no merge, motifs only), <strong>balanced</strong> (sl=1, default — gentle merge), <strong>long</strong> (sl=2 + coverage 0.85, aggressive merge), <strong>helix</strong> (sl=3 + coverage 0.85, LERW filler walks + aggressive merge). Helix is the "small components connected by long winding strands" target: under group <code>1</code> the entire kolam collapses to a single ~80%-coverage strand.</p>
+
+<h3>Grid 7</h3>
+<div class="row">
+  <figure><img src="dyn-7-1-compact.svg"><figcaption>7 · 1 · compact</figcaption></figure>
+  <figure><img src="dyn-7-1-balanced.svg"><figcaption>7 · 1 · balanced</figcaption></figure>
+  <figure><img src="dyn-7-1-long.svg"><figcaption>7 · 1 · long</figcaption></figure>
+  <figure><img src="dyn-7-1-helix.svg"><figcaption>7 · 1 · helix</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="dyn-7-m-compact.svg"><figcaption>7 · m · compact</figcaption></figure>
+  <figure><img src="dyn-7-m-balanced.svg"><figcaption>7 · m · balanced</figcaption></figure>
+  <figure><img src="dyn-7-m-long.svg"><figcaption>7 · m · long</figcaption></figure>
+  <figure><img src="dyn-7-m-helix.svg"><figcaption>7 · m · helix</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="dyn-7-2mm-compact.svg"><figcaption>7 · 2mm · compact</figcaption></figure>
+  <figure><img src="dyn-7-2mm-balanced.svg"><figcaption>7 · 2mm · balanced</figcaption></figure>
+  <figure><img src="dyn-7-2mm-long.svg"><figcaption>7 · 2mm · long</figcaption></figure>
+  <figure><img src="dyn-7-2mm-helix.svg"><figcaption>7 · 2mm · helix</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="dyn-7-4mm_d-compact.svg"><figcaption>7 · 4mm_d · compact</figcaption></figure>
+  <figure><img src="dyn-7-4mm_d-balanced.svg"><figcaption>7 · 4mm_d · balanced</figcaption></figure>
+  <figure><img src="dyn-7-4mm_d-long.svg"><figcaption>7 · 4mm_d · long</figcaption></figure>
+  <figure><img src="dyn-7-4mm_d-helix.svg"><figcaption>7 · 4mm_d · helix</figcaption></figure>
+</div>
+
+<h3>Grid 11</h3>
+<div class="row">
+  <figure><img src="dyn-11-1-compact.svg"><figcaption>11 · 1 · compact</figcaption></figure>
+  <figure><img src="dyn-11-1-balanced.svg"><figcaption>11 · 1 · balanced</figcaption></figure>
+  <figure><img src="dyn-11-1-long.svg"><figcaption>11 · 1 · long</figcaption></figure>
+  <figure><img src="dyn-11-1-helix.svg"><figcaption>11 · 1 · helix</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="dyn-11-m-compact.svg"><figcaption>11 · m · compact</figcaption></figure>
+  <figure><img src="dyn-11-m-balanced.svg"><figcaption>11 · m · balanced</figcaption></figure>
+  <figure><img src="dyn-11-m-long.svg"><figcaption>11 · m · long</figcaption></figure>
+  <figure><img src="dyn-11-m-helix.svg"><figcaption>11 · m · helix</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="dyn-11-2mm-compact.svg"><figcaption>11 · 2mm · compact</figcaption></figure>
+  <figure><img src="dyn-11-2mm-balanced.svg"><figcaption>11 · 2mm · balanced</figcaption></figure>
+  <figure><img src="dyn-11-2mm-long.svg"><figcaption>11 · 2mm · long</figcaption></figure>
+  <figure><img src="dyn-11-2mm-helix.svg"><figcaption>11 · 2mm · helix</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="dyn-11-4mm_d-compact.svg"><figcaption>11 · 4mm_d · compact</figcaption></figure>
+  <figure><img src="dyn-11-4mm_d-balanced.svg"><figcaption>11 · 4mm_d · balanced</figcaption></figure>
+  <figure><img src="dyn-11-4mm_d-long.svg"><figcaption>11 · 4mm_d · long</figcaption></figure>
+  <figure><img src="dyn-11-4mm_d-helix.svg"><figcaption>11 · 4mm_d · helix</figcaption></figure>
+</div>
+</body>
+</html>
