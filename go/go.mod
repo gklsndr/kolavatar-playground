@@ -23,4 +23,4 @@ require (
 
 // Local sibling checkout. Once kolavatar is tagged on GitHub, drop the replace
 // and bump the require line to a real version (e.g. v1.0.0).
-replace github.com/gklsndr/kolavatar => ../../kolavatar-server-go
+replace github.com/gklsndr/kolavatar => ../../kolavatar-go

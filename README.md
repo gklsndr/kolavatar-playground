@@ -11,13 +11,13 @@ ts/        Vite-based Storybook-style preview of the TS renderer.
            Go renderer.
 go/        Standalone Go module with the dev/sample/gallery/playground
            binaries. Imports github.com/gklsndr/kolavatar via a replace
-           directive pointing at the sibling kolavatar-server-go checkout.
+           directive pointing at the sibling kolavatar-go checkout.
 samples/   Reference SVGs produced by the Go renderer. The TS playground's
            "Go reference" cross-check column reads these directly. Regenerate
            via `cd go && go run -tags=kolavatardev ./cmd/kolavatar-gallery`.
 ```
 
-This repo expects sibling checkouts of [kolavatar-client-ts](https://github.com/gklsndr/kolavatar-client-ts) and [kolavatar-server-go](https://github.com/gklsndr/kolavatar-server-go) at `../kolavatar-client-ts` and `../kolavatar-server-go`.
+This repo expects sibling checkouts of [kolavatar-client-ts](https://github.com/gklsndr/kolavatar-client-ts) and [kolavatar-go](https://github.com/gklsndr/kolavatar-go) at `../kolavatar-client-ts` and `../kolavatar-go`.
 
 ## TS playground
 
@@ -32,7 +32,7 @@ The TS client is consumed by package name (`@gklsndr/kolavatar-client-ts`); a Vi
 
 ## Go dev tools
 
-All four binaries are gated behind the `kolavatardev` build tag and require the sibling kolavatar-server-go checkout for the `replace` directive in [go/go.mod](go/go.mod) to resolve.
+All four binaries are gated behind the `kolavatardev` build tag and require the sibling kolavatar-go checkout for the `replace` directive in [go/go.mod](go/go.mod) to resolve.
 
 ```sh
 cd go
