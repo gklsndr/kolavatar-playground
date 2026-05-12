@@ -41,6 +41,68 @@
             <span id="json-status" class="status"></span>
           </div>
         </details>
+
+        <details id="live-api-panel" open>
+          <summary>Live API (Go server)</summary>
+          <p class="muted small" id="live-api-blurb">
+            Calls the Go SDK's HTTP surface
+            (<code>GET /v1/avatars/{seed}.json</code>) through the Vite dev proxy
+            and renders the returned descriptor with the TS renderer above.
+            Start either Go binary in <code>../go/cmd/</code> first
+            (default <code>:8080</code>; override with
+            <code>KOLAVATAR_API_URL</code>).
+          </p>
+          <div class="live-api-grid">
+            <label>
+              Seed
+              <input id="live-seed" type="text" value="asha@example.com" />
+            </label>
+            <label>
+              Score (0..1)
+              <input id="live-score" type="number" min="0" max="1" step="0.05" value="0.5" />
+            </label>
+            <label>
+              Grid (odd, 3..15)
+              <input id="live-grid" type="number" min="3" max="15" step="2" value="7" />
+            </label>
+            <label>
+              Template
+              <select id="live-template">
+                <option value="">(generator default — single grid)</option>
+                <option value="1R">1R (single grid)</option>
+                <option value="2R">2R (interleaved double grid)</option>
+              </select>
+            </label>
+            <label>
+              Symmetry
+              <select id="live-symmetry">
+                <option value="">(seed-derived)</option>
+                <option value="1">1 — identity (no symmetry)</option>
+                <option value="m">m — single mirror</option>
+                <option value="m_d">m_d — diagonal mirror</option>
+                <option value="2">2 — 2-fold rotation</option>
+                <option value="2mm">2mm</option>
+                <option value="2m_dm_d">2m_dm_d</option>
+                <option value="4">4 — 4-fold rotation</option>
+                <option value="4mm_d">4mm_d — full dihedral (most ornate)</option>
+              </select>
+            </label>
+            <label>
+              Palette
+              <input id="live-palette" type="text" placeholder="(optional, e.g. pongal-festive)" />
+            </label>
+            <label class="checkbox">
+              <input id="live-forced-eulerian" type="checkbox" />
+              Force Eulerian circuit (single strand)
+            </label>
+          </div>
+          <div class="live-api-actions">
+            <button id="live-go" type="button">Generate</button>
+            <button id="live-random" type="button" class="ghost">Random seed</button>
+            <span id="live-status" class="status"></span>
+          </div>
+          <div id="live-meta" class="muted small"></div>
+        </details>
       </section>
       <aside id="controls">
         <h3>Render options</h3>

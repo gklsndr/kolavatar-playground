@@ -194,6 +194,48 @@ aside {
 .status.error { color: var(--warn); }
 .status.ok { color: var(--accent); }
 
+#live-api-panel { margin-top: 12px; }
+#live-api-blurb { margin: 6px 0 10px; }
+.live-api-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+}
+.live-api-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.live-api-grid label.checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  font-weight: 400;
+}
+.live-api-grid input,
+.live-api-grid select {
+  padding: 4px 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  background: var(--panel);
+  color: var(--fg);
+  font-size: 12px;
+}
+.live-api-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#live-meta {
+  margin-top: 8px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  word-break: break-word;
+}
+
 #controls label {
   display: flex;
   flex-direction: column;

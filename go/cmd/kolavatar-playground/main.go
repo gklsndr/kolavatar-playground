@@ -31,6 +31,15 @@ func main() {
 	mux.HandleFunc("/render", renderHandler)
 	mux.HandleFunc("/random-seed", randomSeedHandler)
 
+	// Mount the SDK's built-in HTTP surface (/v1/avatars/*) on the same
+	// server so the TS playground's "Live API" panel can talk to this
+	// binary directly — without needing kolavatar-dev to also be running.
+	apiGen, err := kolavatar.New()
+	if err != nil {
+		log.Fatal(err)
+	}
+	apiGen.RegisterRoutes(mux, nil)
+
 	log.Printf("kolavatar-playground listening on http://localhost%s/", *addr)
 	if err := http.ListenAndServe(*addr, mux); err != nil {
 		log.Fatal(err)

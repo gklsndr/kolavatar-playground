@@ -12,12 +12,28 @@ const clientSrc = resolve(__dirname, '../../kolavatar-client-ts/src/index.ts');
 // them in. To regenerate: `cd ../go && go run -tags=kolavatardev ./cmd/kolavatar-gallery -out ../samples/gallery`.
 const goSamplesDir = resolve(__dirname, '../samples');
 
+// Live-API proxy target. The "Live API" panel POSTs query params to
+// /v1/avatars/{seed}.json via this proxy; either Go binary in ../go/cmd/
+// (kolavatar-playground or kolavatar-dev) serves the SDK's built-in
+// /v1/avatars/* surface from kolavatar.RegisterRoutes(). Both default to
+// :8080. Override with KOLAVATAR_API_URL=http://localhost:NNNN if you
+// pass a different -addr to the Go server.
+const apiTarget = process.env.KOLAVATAR_API_URL ?? 'http://localhost:8080';
+
 export default defineConfig({
   server: {
     port: 5173,
     fs: {
       // Allow Vite to read the aliased client-ts source and the sibling samples/.
       allow: [resolve(__dirname), resolve(__dirname, '../..'), goSamplesDir],
+    },
+    proxy: {
+      // Forward the SDK's /v1/avatars/* surface to the Go server. CORS is
+      // sidestepped because the browser sees a same-origin URL.
+      '/v1': {
+        target: apiTarget,
+        changeOrigin: true,
+      },
     },
   },
   resolve: {

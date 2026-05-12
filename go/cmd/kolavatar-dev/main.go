@@ -17,7 +17,7 @@ import (
 )
 
 func main() {
-	addr := flag.String("addr", ":8081", "listen address")
+	addr := flag.String("addr", ":8080", "listen address")
 	flag.Parse()
 
 	gen, err := kolavatar.New()

@@ -4,6 +4,8 @@
 import {
   renderKolavatar,
   validateDescriptor,
+  parseDescriptor,
+  traceStrands,
   getCulturalAttribution,
   type AnimationMode,
   type Descriptor,
@@ -226,6 +228,121 @@ $('#json-apply').addEventListener('click', () => {
 $('#json-reset').addEventListener('click', () => {
   selectStory(state.storyId);
 });
+
+// --- Live API panel -------------------------------------------------------
+//
+// Calls the Go SDK's HTTP surface (mounted by kolavatar.RegisterRoutes) via
+// the Vite /v1 proxy and renders the returned descriptor with the same TS
+// renderer used for static stories. The forced-Eulerian checkbox exercises
+// the new WithForcedEulerianCircuit option on the server side; the strand
+// count under the preview is computed client-side via traceStrands so the
+// invariant is visible without trusting the server.
+
+const liveSeed = $<HTMLInputElement>('#live-seed');
+const liveScore = $<HTMLInputElement>('#live-score');
+const liveGrid = $<HTMLInputElement>('#live-grid');
+const liveTemplate = $<HTMLSelectElement>('#live-template');
+const liveSymmetry = $<HTMLSelectElement>('#live-symmetry');
+const livePalette = $<HTMLInputElement>('#live-palette');
+const liveForceEulerian = $<HTMLInputElement>('#live-forced-eulerian');
+const liveStatus = $('#live-status');
+const liveMeta = $('#live-meta');
+
+function setLiveStatus(text: string, kind: '' | 'ok' | 'error'): void {
+  liveStatus.textContent = text;
+  liveStatus.className = 'status' + (kind ? ' ' + kind : '');
+}
+
+function buildLiveURL(): string {
+  const seed = liveSeed.value.trim();
+  if (!seed) throw new Error('seed is required');
+  const params = new URLSearchParams();
+  params.set('score', liveScore.value);
+  if (liveGrid.value) params.set('grid', liveGrid.value);
+  if (liveTemplate.value) params.set('template', liveTemplate.value);
+  if (liveSymmetry.value) params.set('symmetry', liveSymmetry.value);
+  if (livePalette.value.trim()) params.set('palette', livePalette.value.trim());
+  if (liveForceEulerian.checked) params.set('forced_eulerian', 'true');
+  return `/v1/avatars/${encodeURIComponent(seed)}.json?${params.toString()}`;
+}
+
+async function fetchLive(): Promise<void> {
+  liveMeta.textContent = '';
+  let url: string;
+  try {
+    url = buildLiveURL();
+  } catch (err) {
+    setLiveStatus((err as Error).message, 'error');
+    return;
+  }
+  setLiveStatus('fetching…', '');
+  let res: Response;
+  try {
+    res = await fetch(url, { headers: { Accept: 'application/json' } });
+  } catch (err) {
+    setLiveStatus(
+      `network error: ${(err as Error).message}. Is kolavatar-dev running on :8081?`,
+      'error',
+    );
+    return;
+  }
+  const body = await res.text();
+  if (!res.ok) {
+    // The SDK returns a stable {error, message} JSON body for failures.
+    let message = body;
+    try {
+      const parsed = JSON.parse(body) as { error?: string; message?: string };
+      if (parsed.error === 'eulerian_unreachable') {
+        setLiveStatus(
+          `${res.status} eulerian_unreachable — this seed cannot be drawn as a single Eulerian circuit under these options. Try a different seed or turn the toggle off.`,
+          'error',
+        );
+        return;
+      }
+      message = `${parsed.error ?? res.statusText}: ${parsed.message ?? ''}`;
+    } catch {
+      // body wasn't JSON — fall through with the raw text
+    }
+    setLiveStatus(`HTTP ${res.status}: ${message}`, 'error');
+    return;
+  }
+  let descriptor: Descriptor;
+  try {
+    descriptor = parseDescriptor(body);
+  } catch (err) {
+    setLiveStatus(`bad descriptor: ${(err as Error).message}`, 'error');
+    return;
+  }
+  state.descriptor = descriptor;
+  jsonTextarea.value = JSON.stringify(descriptor, null, 2);
+  rerender();
+
+  const N = descriptor.grid;
+  const primaryTiles = descriptor.tiles.slice(0, N * N);
+  const strandCount = traceStrands(N, primaryTiles).length;
+  const eulerLabel = liveForceEulerian.checked ? ' [forced Eulerian]' : '';
+  liveMeta.textContent =
+    `group=${descriptor.symmetry_group} · grid=${descriptor.grid} · tier=${descriptor.tier} · ` +
+    `palette=${descriptor.palette.name} · strands=${strandCount}${eulerLabel}`;
+  setLiveStatus(`200 OK · ${url}`, 'ok');
+}
+
+$('#live-go').addEventListener('click', () => void fetchLive());
+
+$('#live-random').addEventListener('click', () => {
+  // Cheap client-side seed; the Go SDK doesn't expose /random-seed via the
+  // SDK's RegisterRoutes (that's a kolavatar-playground-binary route).
+  const buf = new Uint8Array(8);
+  crypto.getRandomValues(buf);
+  liveSeed.value = Array.from(buf, (b) => b.toString(16).padStart(2, '0')).join('');
+});
+
+// Re-fetch on Enter from any text/number input in the live panel.
+[liveSeed, liveScore, liveGrid, livePalette].forEach((el) =>
+  el.addEventListener('keydown', (e) => {
+    if ((e as KeyboardEvent).key === 'Enter') void fetchLive();
+  }),
+);
 
 // --- Control wiring -------------------------------------------------------
 
