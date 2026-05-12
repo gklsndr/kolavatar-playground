@@ -96,6 +96,42 @@
               Force Eulerian circuit (single strand)
             </label>
           </div>
+          <details class="live-api-advanced">
+            <summary>Advanced overrides</summary>
+            <p class="muted small">
+              These knobs opt out of the v1.3 p-knob path (which always uses
+              edge-first sampling): setting <code>coverage</code> or
+              <code>strand_length</code> routes generation through the
+              composer instead so motif-based output honours the override.
+              <code>salt</code> isolates the seed namespace (same seed +
+              different salt → different design). <code>min_score</code>
+              clamps the effective score up. <code>score_bands</code> tunes
+              how many discrete bands the score is bucketed into for the
+              composer's PRNG seeding.
+            </p>
+            <div class="live-api-grid">
+              <label>
+                Salt
+                <input id="live-salt" type="text" placeholder="(none)" />
+              </label>
+              <label>
+                Coverage (0..1)
+                <input id="live-coverage" type="number" min="0" max="1" step="0.05" placeholder="(score-derived)" />
+              </label>
+              <label>
+                Strand length (0..3)
+                <input id="live-strand-length" type="number" min="0" max="3" step="1" placeholder="(0)" />
+              </label>
+              <label>
+                Min score (0..1)
+                <input id="live-min-score" type="number" min="0" max="1" step="0.05" placeholder="(0)" />
+              </label>
+              <label>
+                Score bands (1..16)
+                <input id="live-score-bands" type="number" min="1" max="16" step="1" placeholder="(7)" />
+              </label>
+            </div>
+          </details>
           <div class="live-api-actions">
             <button id="live-go" type="button">Generate</button>
             <button id="live-random" type="button" class="ghost">Random seed</button>

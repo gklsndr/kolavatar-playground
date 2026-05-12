@@ -245,6 +245,11 @@ const liveTemplate = $<HTMLSelectElement>('#live-template');
 const liveSymmetry = $<HTMLSelectElement>('#live-symmetry');
 const livePalette = $<HTMLInputElement>('#live-palette');
 const liveForceEulerian = $<HTMLInputElement>('#live-forced-eulerian');
+const liveSalt = $<HTMLInputElement>('#live-salt');
+const liveCoverage = $<HTMLInputElement>('#live-coverage');
+const liveStrandLength = $<HTMLInputElement>('#live-strand-length');
+const liveMinScore = $<HTMLInputElement>('#live-min-score');
+const liveScoreBands = $<HTMLInputElement>('#live-score-bands');
 const liveStatus = $('#live-status');
 const liveMeta = $('#live-meta');
 
@@ -263,6 +268,11 @@ function buildLiveURL(): string {
   if (liveSymmetry.value) params.set('symmetry', liveSymmetry.value);
   if (livePalette.value.trim()) params.set('palette', livePalette.value.trim());
   if (liveForceEulerian.checked) params.set('forced_eulerian', 'true');
+  if (liveSalt.value.trim()) params.set('salt', liveSalt.value.trim());
+  if (liveCoverage.value !== '') params.set('coverage', liveCoverage.value);
+  if (liveStrandLength.value !== '') params.set('strand_length', liveStrandLength.value);
+  if (liveMinScore.value !== '') params.set('min_score', liveMinScore.value);
+  if (liveScoreBands.value !== '') params.set('score_bands', liveScoreBands.value);
   return `/v1/avatars/${encodeURIComponent(seed)}.json?${params.toString()}`;
 }
 
@@ -338,7 +348,17 @@ $('#live-random').addEventListener('click', () => {
 });
 
 // Re-fetch on Enter from any text/number input in the live panel.
-[liveSeed, liveScore, liveGrid, livePalette].forEach((el) =>
+[
+  liveSeed,
+  liveScore,
+  liveGrid,
+  livePalette,
+  liveSalt,
+  liveCoverage,
+  liveStrandLength,
+  liveMinScore,
+  liveScoreBands,
+].forEach((el) =>
   el.addEventListener('keydown', (e) => {
     if ((e as KeyboardEvent).key === 'Enter') void fetchLive();
   }),

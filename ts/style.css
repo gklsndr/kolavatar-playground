@@ -235,6 +235,20 @@ aside {
   font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   word-break: break-word;
 }
+.live-api-advanced {
+  margin-top: 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--code-bg);
+}
+.live-api-advanced > summary {
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.live-api-advanced > p { margin: 6px 0 10px; }
+.live-api-advanced .live-api-grid { margin-top: 8px; }
 
 #controls label {
   display: flex;
