@@ -1,0 +1,10 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>kolavatar-web — no TS bundle staged</title>
+<style>body{font:14px/1.5 system-ui,sans-serif;max-width:640px;margin:40px auto;padding:0 20px;color:#222}code{background:#eee;padding:1px 4px;border-radius:3px}</style>
+<h1>No TS bundle</h1>
+<p>This is the kolavatar-web placeholder. The Vite-built TS playground hasn't been staged into <code>cmd/kolavatar-web/dist/</code> for this binary — only the Go playground at <a href="/go/">/go/</a> and the SDK API at <code>/v1/avatars/{seed}.{format}</code> are wired up.</p>
+<p>To stage the TS bundle, run from the playground repo root:</p>
+<pre>cd ts &amp;&amp; npm run build &amp;&amp; cp -r dist/* ../go/cmd/kolavatar-web/dist/
+cd ../go &amp;&amp; go build -tags=kolavatardev ./cmd/kolavatar-web</pre>
+<p>The production Dockerfile does this automatically.</p>

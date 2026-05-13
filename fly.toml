@@ -1,0 +1,48 @@
+# Fly.io configuration for the kolavatar-web binary.
+#
+# Single shared-cpu-1x VM is plenty for a demo: the API path is CPU-bound
+# but every request is ~milliseconds, and static asset serving comes
+# straight out of an embedded fs. We auto-stop when idle and auto-start
+# on the next request — the free tier covers this comfortably.
+#
+# Deploy:
+#   bash scripts/prepare-deploy.sh   # vendors kolavatar-ts source
+#   fly launch --no-deploy           # first time only; pick app name + region
+#   fly deploy
+#
+# Override the kolavatar-go ref baked into the Docker build with:
+#   fly deploy --build-arg KOLAVATAR_GO_REF=v1.3.0
+
+app           = "kolavatar-web"
+primary_region = "bom"   # Mumbai — adjust to closest region for your audience
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8080"
+
+[http_service]
+  internal_port       = 8080
+  force_https         = true
+  auto_stop_machines  = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes           = ["app"]
+
+  [http_service.concurrency]
+    type       = "requests"
+    soft_limit = 50
+    hard_limit = 100
+
+  [[http_service.checks]]
+    interval     = "30s"
+    timeout      = "5s"
+    grace_period = "10s"
+    method       = "GET"
+    path         = "/healthz"
+
+[[vm]]
+  cpu_kind  = "shared"
+  cpus      = 1
+  memory_mb = 256

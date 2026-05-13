@@ -1,11 +1,21 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
+import { existsSync } from 'node:fs';
 
 // The TS playground consumes the kolavatar-ts library by its published
-// package name, but during development we alias the import to the sibling
-// repo's src/ so renderer edits hot-reload. Switch to a real version range
-// once the package is on npm.
-const clientSrc = resolve(__dirname, '../../kolavatar-ts/src/index.ts');
+// package name, but during development we alias the import to a source
+// path so renderer edits hot-reload. Switch to a real version range once
+// the package is on npm and drop both fallbacks.
+//
+// Resolution order (first that exists wins):
+//   1. ts/vendor-kolavatar-ts/src/index.ts  — populated by
+//      scripts/prepare-deploy.sh for Docker / Fly builds where reaching
+//      outside the build context isn't possible.
+//   2. ../../kolavatar-ts/src/index.ts      — sibling-checkout layout
+//      used during local dev.
+const vendoredSrc = resolve(__dirname, 'vendor-kolavatar-ts/src/index.ts');
+const siblingSrc = resolve(__dirname, '../../kolavatar-ts/src/index.ts');
+const clientSrc = existsSync(vendoredSrc) ? vendoredSrc : siblingSrc;
 
 // Go-rendered reference SVGs live in ../samples (this monorepo) and are served
 // by a custom dev middleware so the cross-check column doesn't have to copy

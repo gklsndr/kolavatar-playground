@@ -1,0 +1,29 @@
+# Pruning the build context shaves seconds off every docker build and
+# stops Fly.io from uploading large irrelevant trees.
+
+# VCS
+.git
+.gitignore
+
+# Node
+ts/node_modules
+ts/dist
+node_modules
+
+# Go build artefacts
+go/bin
+go/cmd/kolavatar-web/dist/*
+# Keep the placeholder index.html so a from-scratch local `go build`
+# still has something to embed. The Dockerfile overlays the real Vite
+# bundle on top of it.
+!go/cmd/kolavatar-web/dist/index.html
+
+# Editor / OS
+.idea
+.vscode
+*.swp
+.DS_Store
+.claude
+
+# Docs and dev-only assets aren't needed in the runtime image.
+samples

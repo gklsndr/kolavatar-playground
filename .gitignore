@@ -24,3 +24,13 @@ go/bin/
 
 # Per-user Claude Code state
 .claude/
+
+# Deploy staging (populated by scripts/prepare-deploy.sh; not committed)
+ts/vendor-kolavatar-ts/
+vendor-kolavatar-go/
+
+# kolavatar-web embed target. The committed placeholder index.html is
+# overwritten by the Dockerfile with the real Vite bundle; locally,
+# anything beyond the placeholder is build output.
+go/cmd/kolavatar-web/dist/*
+!go/cmd/kolavatar-web/dist/index.html
