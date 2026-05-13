@@ -54,3 +54,13 @@ ts_count=$(find "$TS_DEST/src" -name '*.ts' | wc -l | tr -d ' ')
 go_count=$(find "$GO_DEST" -name '*.go' | wc -l | tr -d ' ')
 echo "vendored kolavatar-ts/src → ts/vendor-kolavatar-ts/src ($ts_count files)"
 echo "vendored kolavatar-go     → vendor-kolavatar-go        ($go_count files)"
+
+# Regenerate the gallery JSON from the local kolavatar-go checkout (the
+# script falls back gracefully if the user's local Go module hasn't been
+# initialised — the committed gallery.json keeps the build alive).
+if command -v go >/dev/null 2>&1; then
+  bash "$ROOT/scripts/regen-gallery.sh" || \
+    echo "warning: gallery regen failed; deploy will use the committed ts/public/gallery.json"
+else
+  echo "info: 'go' not installed locally; skipping gallery regen — deploy will use the committed ts/public/gallery.json"
+fi

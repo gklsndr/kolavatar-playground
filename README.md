@@ -101,6 +101,20 @@ Both vendored paths are `.gitignore`d. Override their source locations
 via `KOLAVATAR_TS=/abs/path` and `KOLAVATAR_GO=/abs/path` if your
 sibling checkouts live elsewhere.
 
+### Refreshing the gallery
+
+The TS playground's Gallery panel reads a pre-generated catalogue at
+`ts/public/gallery.json` (100 descriptors: 4 high-symmetry groups × 5 seeds
+× 5 score points on a 13×13 grid). `scripts/prepare-deploy.sh` regenerates
+it automatically when `go` is installed; to regenerate on its own:
+
+```sh
+bash scripts/regen-gallery.sh
+```
+
+Run after any SDK change that would shift descriptor output (a SpecVersion
+bump, a new motif, a profile knob retuning) so the gallery stays in sync.
+
 ### Local dry run
 
 ```sh
