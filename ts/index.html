@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <header>
-      <h1>kolavatar <span class="muted">TS playground</span></h1>
-      <div class="muted">
-        Storybook-style preview of the TS renderer. Each story is a hand-crafted
-        descriptor; the Go-reference stories show the server-side output beside
-        ours for visual cross-check.
+    <header class="page-header">
+      <div class="page-header-text">
+        <h1>kolavatar <span class="muted">TS playground</span></h1>
+        <div class="muted">
+          Storybook-style preview of the TS renderer. Each story is a hand-crafted
+          descriptor; the Go-reference stories show the server-side output beside
+          ours for visual cross-check.
+        </div>
       </div>
+      <a href="/gallery" class="header-link">Gallery (100 sample avatars) →</a>
     </header>
     <main>
       <aside id="sidebar"></aside>
@@ -138,32 +141,6 @@
             <span id="live-status" class="status"></span>
           </div>
           <div id="live-meta" class="muted small"></div>
-        </details>
-
-        <details id="gallery-panel">
-          <summary>Gallery (100 designs)</summary>
-          <p class="muted small" id="gallery-blurb">
-            A pre-generated catalogue showing the generator's range across the
-            four most ornate symmetry groups (<code>4mm_d</code>, <code>4</code>,
-            <code>2mm</code>, <code>2m_dm_d</code>) on a 13×13 grid. Each row is
-            one (symmetry, seed) pair; the five columns walk score 0.20 → 0.95
-            so progression reads left-to-right. Click any tile to load that
-            descriptor into the main canvas above.
-          </p>
-          <div id="gallery-toolbar">
-            <label>
-              Symmetry
-              <select id="gallery-filter-sym">
-                <option value="">all groups</option>
-                <option value="4mm_d">4mm_d</option>
-                <option value="4">4</option>
-                <option value="2mm">2mm</option>
-                <option value="2m_dm_d">2m_dm_d</option>
-              </select>
-            </label>
-            <span id="gallery-status" class="status"></span>
-          </div>
-          <div id="gallery-wall"></div>
         </details>
       </section>
       <aside id="controls">

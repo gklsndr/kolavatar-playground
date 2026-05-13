@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>kolavatar — gallery</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="gallery-body">
+    <header class="page-header">
+      <div class="page-header-text">
+        <h1>kolavatar <span class="muted">gallery</span></h1>
+        <div class="muted small">
+          100 pre-generated kolams across the four most ornate symmetry groups
+          (<code>4mm_d</code>, <code>4</code>, <code>2mm</code>, <code>2m_dm_d</code>)
+          on a 13×13 grid. Each row is one (symmetry, seed) pair; the five tiles
+          per row walk score 0.20 → 0.95 left-to-right.
+        </div>
+      </div>
+      <a href="/" class="header-link">← Playground</a>
+    </header>
+    <main id="gallery-page">
+      <section id="gallery-toolbar">
+        <label>
+          Symmetry
+          <select id="gallery-filter-sym">
+            <option value="">all groups</option>
+            <option value="4mm_d">4mm_d (full dihedral)</option>
+            <option value="4">4 (4-fold rotation)</option>
+            <option value="2mm">2mm</option>
+            <option value="2m_dm_d">2m_dm_d</option>
+          </select>
+        </label>
+        <span id="gallery-status" class="status"></span>
+      </section>
+      <section id="gallery-wall"></section>
+    </main>
+    <script type="module" src="./gallery.ts"></script>
+  </body>
+</html>

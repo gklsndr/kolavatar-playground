@@ -54,6 +54,15 @@ export default defineConfig({
   build: {
     outDir: resolve(__dirname, 'dist'),
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        // Multi-page Vite build. Each entry produces a separate <name>.html
+        // at dist/. The Go web binary's spaHandler tries `<path>.html` as a
+        // fallback so /gallery resolves to dist/gallery.html.
+        main: resolve(__dirname, 'index.html'),
+        gallery: resolve(__dirname, 'gallery.html'),
+      },
+    },
   },
   plugins: [
     {

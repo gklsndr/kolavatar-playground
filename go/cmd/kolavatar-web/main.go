@@ -113,6 +113,13 @@ func spaHandler(fsys fs.FS) http.Handler {
 		if serveFile(clean) {
 			return
 		}
+		// Multi-page Vite build: try `<clean>.html` so /gallery resolves to
+		// gallery.html without needing a trailing slash or dir.
+		if !strings.HasSuffix(clean, ".html") {
+			if serveFile(clean + ".html") {
+				return
+			}
+		}
 		// Fall through: any unknown path under / serves the SPA shell.
 		if serveFile("index.html") {
 			return
