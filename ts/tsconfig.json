@@ -12,8 +12,8 @@
     "noEmit": true,
     "types": ["node"],
     "paths": {
-      "@gklsndr/kolavatar-client-ts": ["../../kolavatar-client-ts/src/index.ts"]
+      "@gklsndr/kolavatar-ts": ["../../kolavatar-ts/src/index.ts"]
     }
   },
-  "include": ["./**/*.ts", "../../kolavatar-client-ts/src/**/*.ts"]
+  "include": ["./**/*.ts", "../../kolavatar-ts/src/**/*.ts"]
 }

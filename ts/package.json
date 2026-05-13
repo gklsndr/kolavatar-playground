@@ -2,7 +2,7 @@
   "name": "@gklsndr/kolavatar-playground-ts",
   "version": "0.0.0",
   "private": true,
-  "description": "Storybook-style playground for kolavatar-client-ts. Aliases the sibling source for HMR; cross-checks against Go-rendered samples in ../samples.",
+  "description": "Storybook-style playground for kolavatar-ts. Aliases the sibling source for HMR; cross-checks against Go-rendered samples in ../samples.",
   "type": "module",
   "scripts": {
     "dev": "vite",

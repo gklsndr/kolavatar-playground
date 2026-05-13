@@ -1,11 +1,11 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
 
-// The TS playground consumes the kolavatar-client-ts library by its published
+// The TS playground consumes the kolavatar-ts library by its published
 // package name, but during development we alias the import to the sibling
 // repo's src/ so renderer edits hot-reload. Switch to a real version range
 // once the package is on npm.
-const clientSrc = resolve(__dirname, '../../kolavatar-client-ts/src/index.ts');
+const clientSrc = resolve(__dirname, '../../kolavatar-ts/src/index.ts');
 
 // Go-rendered reference SVGs live in ../samples (this monorepo) and are served
 // by a custom dev middleware so the cross-check column doesn't have to copy
@@ -38,7 +38,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@gklsndr/kolavatar-client-ts': clientSrc,
+      '@gklsndr/kolavatar-ts': clientSrc,
     },
   },
   build: {

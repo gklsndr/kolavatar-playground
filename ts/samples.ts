@@ -6,11 +6,11 @@
 // hand-laid out to be parity-clean (each cell has an even count of active
 // edges), so the strand tracer treats them as honest closed loops.
 //
-// Bit layout (matches kolavatar-server-go): N=1, E=2, S=4, W=8.
+// Bit layout (matches kolavatar-go): N=1, E=2, S=4, W=8.
 // Two-edge patterns: 3=NE, 5=NS, 6=ES, 9=NW, 10=EW, 12=SW. X cell: 15.
 
-import type { Descriptor } from '@gklsndr/kolavatar-client-ts';
-import { SPEC_VERSION } from '@gklsndr/kolavatar-client-ts';
+import type { Descriptor } from '@gklsndr/kolavatar-ts';
+import { SPEC_VERSION } from '@gklsndr/kolavatar-ts';
 
 interface Story {
   id: string;

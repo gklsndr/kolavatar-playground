@@ -6,7 +6,7 @@ Development tools and visual fixtures for the [kolavatar](https://github.com/gkl
 
 ```
 ts/        Vite-based Storybook-style preview of the TS renderer.
-           Aliases @gklsndr/kolavatar-client-ts to the sibling repo's src/
+           Aliases @gklsndr/kolavatar-ts to the sibling repo's src/
            for HMR. Cross-checks against ../samples for parity with the
            Go renderer.
 go/        Standalone Go module with the dev/sample/gallery/playground
@@ -17,7 +17,7 @@ samples/   Reference SVGs produced by the Go renderer. The TS playground's
            via `cd go && go run -tags=kolavatardev ./cmd/kolavatar-gallery`.
 ```
 
-This repo expects sibling checkouts of [kolavatar-client-ts](https://github.com/gklsndr/kolavatar-client-ts) and [kolavatar-go](https://github.com/gklsndr/kolavatar-go) at `../kolavatar-client-ts` and `../kolavatar-go`.
+This repo expects sibling checkouts of [kolavatar-ts](https://github.com/gklsndr/kolavatar-ts) and [kolavatar-go](https://github.com/gklsndr/kolavatar-go) at `../kolavatar-ts` and `../kolavatar-go`.
 
 ## TS playground
 
@@ -28,7 +28,7 @@ npm run dev          # vite dev server on :5173, HMR over the sibling src/
 npm run build        # static build into ts/dist/
 ```
 
-The TS client is consumed by package name (`@gklsndr/kolavatar-client-ts`); a Vite + tsconfig alias resolves it to `../../kolavatar-client-ts/src/index.ts` so renderer edits hot-reload without an intermediate build. Once the package is published to npm, switch to a real version range and drop the alias.
+The TS client is consumed by package name (`@gklsndr/kolavatar-ts`); a Vite + tsconfig alias resolves it to `../../kolavatar-ts/src/index.ts` so renderer edits hot-reload without an intermediate build. Once the package is published to npm, switch to a real version range and drop the alias.
 
 ## Go dev tools
 

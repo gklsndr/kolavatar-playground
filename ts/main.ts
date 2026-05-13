@@ -1,5 +1,5 @@
 // Playground app entry. Imports the published package name; Vite + tsconfig
-// aliases resolve it to ../../kolavatar-client-ts/src for HMR during dev,
+// aliases resolve it to ../../kolavatar-ts/src for HMR during dev,
 // so renderer edits hot-reload without a build step.
 import {
   renderKolavatar,
@@ -10,7 +10,7 @@ import {
   type AnimationMode,
   type Descriptor,
   type RenderOptions,
-} from '@gklsndr/kolavatar-client-ts';
+} from '@gklsndr/kolavatar-ts';
 import { stories, type Story } from './samples.js';
 
 // --- DOM lookups ----------------------------------------------------------
